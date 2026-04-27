@@ -1,0 +1,24 @@
+from sklearn.datasets import load_iris,fetch_california_housing
+from sklearn.model_selection import train_test_split,cross_val_score
+from sklearn.linear_model import LinearRegression,LogisticRegression
+from sklearn.metrics import accuracy_score,mean_squared_error
+housing=fetch_california_housing()
+Xr=housing.data
+yr=housing.target
+Xr_train,Xr_test,yr_train,yr_test=train_test_split(Xr,yr,test_size=0.3,random_state=42)
+lin_model=LinearRegression()
+lin_model.fit(Xr_train,yr_train)
+lin_pred=lin_model.predict(Xr_test)
+print("Linear Regression without cv",mean_squared_error(yr_test,lin_pred))
+lin_cv=cross_val_score(lin_model,Xr,yr,cv=5,scoring='neg_mean_squared_error')
+print("Linear Regression with cv",-lin_cv.mean())
+iris=load_iris()
+Xc=iris.data
+yc=iris.target
+Xc_train,Xc_test,yc_train,yc_test=train_test_split(Xc,yc,test_size=0.3,random_state=42)
+log_model=LogisticRegression(max_iter=200)
+log_model.fit(Xc_train,yc_train)
+log_pred=log_model.predict(Xc_test)
+print("Log Regression without cv",accuracy_score(yc_test,log_pred))
+log_cv=cross_val_score(log_model,Xc,yc,cv=5)
+print("Log Regression with cv",log_cv.mean())
