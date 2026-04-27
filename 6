@@ -1,0 +1,37 @@
+# Simple EDA Program without using iloc
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+data = pd.read_csv("cleaned_data.csv")
+
+# Show first rows
+print(data.head())
+
+# Show summary statistics
+print(data.describe())
+
+# Check missing values
+print(data.isnull().sum())
+
+# Histogram
+data.hist()
+plt.show()
+
+# Correlation Heatmap
+sns.heatmap(data.corr(), annot=True)
+plt.show()
+
+# Scatter Plot
+plt.scatter(data["Age"], data["Salary"])
+plt.xlabel("Age")
+plt.ylabel("Salary")
+plt.title("Scatter Plot")
+plt.show()
+
+# Box Plot
+plt.boxplot(data["Age"])
+plt.title("Box Plot of Age")
+plt.show()
