@@ -1,0 +1,58 @@
+def a_star():
+    n = int(input("Enter number of nodes: "))
+    
+    nodes = []
+    print("Enter node names:")
+    for i in range(n):
+        nodes.append(input())
+
+    print("Enter heuristic values:")
+    h = {}
+    for node in nodes:
+        h[node] = int(input(f"h({node}) = "))
+
+    print("\nEnter cost adjacency matrix (0 if no path):")
+    cost = {}
+    for i in range(n):
+        cost[nodes[i]] = {}
+        row = list(map(int, input().split()))
+        for j in range(n):
+            if row[j] != 0:
+                cost[nodes[i]][nodes[j]] = row[j]
+
+    start = input("\nEnter start node: ")
+    goal = input("Enter goal node: ")
+
+    open_list = [start]
+    g = {start: 0}
+    parent = {start: None}
+
+    while open_list:
+        # Select node with minimum f(n) = g(n) + h(n)
+        current = min(open_list, key=lambda x: g[x] + h[x])
+        open_list.remove(current)
+
+        # Goal check
+        if current == goal:
+            path = []
+            while current:
+                path.append(current)
+                current = parent[current]
+
+            print("\nShortest Path:", path[::-1])
+            print("Total Cost:", g[goal])
+            return
+
+        # Explore neighbors
+        for neighbor in cost.get(current, {}):
+            new_g = g[current] + cost[current][neighbor]
+
+            if neighbor not in g or new_g < g[neighbor]:
+                g[neighbor] = new_g
+                parent[neighbor] = current
+
+                if neighbor not in open_list:
+                    open_list.append(neighbor)
+
+    print("Path not found")
+a_star()
