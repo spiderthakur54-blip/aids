@@ -1,0 +1,46 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv(r"C:\Users\omman\Downloads\Amazon Sale Report.csv")
+
+print("First 10rows")
+print(df.head(10))
+print("\nDataset Info:\n")
+print(df.info())
+print("\nStatistical Summary:\n")
+print(df.describe())
+print("Null values in each column:\n")
+print(df.isnull().sum())
+
+category_trend = df.groupby('Category')['Amount'].sum()
+top_customers = df.groupby('Order ID')['Amount'].sum().head(10)
+sales_trend = df.groupby('Date')['Amount'].sum()
+
+plt.figure()
+sales_trend.plot()
+plt.title("Sales Trend Over Time")
+plt.xlabel("Date")
+plt.ylabel("Total Sales Amount")
+plt.grid()
+plt.show()
+
+plt.figure()
+category_trend.plot(kind='bar')
+plt.title("Category-wise Spending")
+plt.xlabel("Category")
+plt.ylabel("Amount")
+plt.xticks(rotation=45)
+plt.show()
+
+# Top Customers
+plt.figure()
+top_customers.plot(kind='bar')
+plt.title("Top 10 Customers")
+plt.xlabel("Order ID")
+plt.ylabel("Amount")
+plt.xticks(rotation=90)
+plt.show()
+
+sns.heatmap(df.corr(numeric_only=True), annot=True)
+plt.show()
