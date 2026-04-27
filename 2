@@ -1,0 +1,27 @@
+from collections import deque
+n=int(input("Enter no of nodes"))
+graph={}
+for i in range(n):
+    node=input("Enter node name:")
+    neighbors=input(f"Enter neighbors of {node}:").split()
+    graph[node]=neighbors
+def bfs(start):
+    visited=[]
+    queue=deque([start])
+    while queue:
+        current=queue.popleft()
+        if current not in visited:
+            visited.append(current)
+            queue.extend(graph[current])
+    print("BFS",visited)
+
+def dfs(start,visited):
+    visited.append(start)
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            dfs(neighbor,visited)
+start_node=input("Enter start node:")
+bfs(start_node)
+visited_dfs=[]
+dfs(start_node,visited_dfs)
+print("DFS",visited_dfs)
