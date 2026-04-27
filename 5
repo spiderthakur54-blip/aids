@@ -1,0 +1,64 @@
+# Easy Python Program for EDA on E-commerce Customer Segmentation Dataset
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# -------------------------------
+# Step 1: Load Dataset
+# -------------------------------
+# Replace with your file name
+df = pd.read_csv("customers.csv")
+
+# -------------------------------
+# Step 2: Display Basic Information
+# -------------------------------
+print("First 5 Rows of Dataset:")
+print(df.head())
+
+print("\nDataset Info:")
+print(df.info())
+
+print("\nStatistical Summary:")
+print(df.describe())
+
+# -------------------------------
+# Step 3: Check Missing Values
+# -------------------------------
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+# -------------------------------
+# Step 4: Plot Age Distribution
+# -------------------------------
+plt.hist(df["Age"])
+plt.title("Age Distribution")
+plt.xlabel("Age")
+plt.ylabel("Count")
+plt.show()
+
+# -------------------------------
+# Step 5: Plot Annual Income Distribution
+# -------------------------------
+plt.hist(df["Annual Income (k$)"])
+plt.title("Annual Income Distribution")
+plt.xlabel("Income")
+plt.ylabel("Count")
+plt.show()
+
+# -------------------------------
+# Step 6: Plot Spending Score Distribution
+# -------------------------------
+plt.hist(df["Spending Score (1-100)"])
+plt.title("Spending Score Distribution")
+plt.xlabel("Spending Score")
+plt.ylabel("Count")
+plt.show()
+
+# -------------------------------
+# Step 7: Scatter Plot for Customer Segmentation
+# -------------------------------
+plt.scatter(df["Annual Income (k$)"], df["Spending Score (1-100)"])
+plt.title("Customer Segmentation")
+plt.xlabel("Annual Income")
+plt.ylabel("Spending Score")
+plt.show()
